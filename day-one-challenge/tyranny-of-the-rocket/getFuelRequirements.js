@@ -33,6 +33,6 @@ const totalfuel = () => {
   return sum;
 }
 
-
+export { totalfuel, findfuel };
 
 console.log(totalfuel());
