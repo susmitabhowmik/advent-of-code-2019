@@ -1,8 +1,5 @@
-const fs = require('fs');
-const path = require('path')
 const { sum } = require('ramda');
-const text = path.join(__dirname, 'module-mass.txt')
-const massArray = fs.readFileSync(path.join(text)).toString('utf-8').split("\n");
+const massArray = require('./fuelData');
 //individually calculate the fuel needed for each mass of each module
 //to calculate the individual fuel requirements divide the mass by 3, then round down, and subtract 2
 //then sum together all the fuel requirements 
@@ -13,11 +10,10 @@ const findfuel = num => {
 };
 
 const totalfuel = array => {
-
   let fuelArray = [];
 
   for (let index = 0; index < array.length; index++) {
-    let currentMass = (parseInt(array[index]));
+    let currentMass = array[index];
     let totalfuel = 0;
 
     while (findfuel(currentMass) > 0) {
