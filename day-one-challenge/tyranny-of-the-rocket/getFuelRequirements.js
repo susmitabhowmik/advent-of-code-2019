@@ -1,31 +1,25 @@
-const { sum } = require('ramda');
+const { sum, map } = require('ramda');
 const massArray = require('./fuelData');
-//individually calculate the fuel needed for each mass of each module
-//to calculate the individual fuel requirements divide the mass by 3, then round down, and subtract 2
-//then sum together all the fuel requirements 
-//each fuel also requires it's own fuel
 
-const findfuel = num => {
+const findFuel = num => {
   return Math.floor(num / 3) - 2;
 };
 
-const totalfuel = array => {
-  let fuelArray = [];
+const currentFuel = currentMass => {
+  let sumFuel = 0;
 
-  for (let index = 0; index < array.length; index++) {
-    let currentMass = array[index];
-    let totalfuel = 0;
-
-    while (findfuel(currentMass) > 0) {
-      totalfuel += findfuel(currentMass);
-      currentMass = findfuel(currentMass);
-    }
-    fuelArray.push(totalfuel);
+  while (findFuel(currentMass) > 0) {
+    const mass = findFuel(currentMass);
+    sumFuel += mass;
+    currentMass = mass;
   }
-
-  return sum(fuelArray);
+  return sumFuel;
 };
 
-console.log(totalfuel(massArray));
+const totalFuel = array => {
+  return sum(map(currentFuel, array));
+};
 
-module.exports = totalfuel;
+console.log(totalFuel(massArray));
+
+module.exports = totalFuel;
