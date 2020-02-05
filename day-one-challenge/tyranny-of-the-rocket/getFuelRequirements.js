@@ -6,14 +6,14 @@ const findFuel = num => {
 };
 
 const currentFuel = currentMass => {
-  let sumFuel = 0;
+  let fuel = 0;
 
   while (findFuel(currentMass) > 0) {
-    const mass = findFuel(currentMass);
-    sumFuel += mass;
-    currentMass = mass;
+    fuel += findFuel(currentMass);
+    currentMass = findFuel(currentMass);
   }
-  return sumFuel;
+
+  return fuel;
 };
 
 const totalFuel = array => {
