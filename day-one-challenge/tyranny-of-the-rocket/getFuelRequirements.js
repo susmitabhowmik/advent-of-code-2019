@@ -5,16 +5,10 @@ const findFuel = num => {
   return Math.floor(num / 3) - 2;
 };
 
-const currentFuel = currentMass => {
-  let fuel = 0;
-
-  while (findFuel(currentMass) > 0) {
-    fuel += findFuel(currentMass);
-    currentMass = findFuel(currentMass);
-  }
-
-  return fuel;
-};
+const currentFuel = (currentMass) => {
+  const fuel = findFuel(currentMass);
+  return (fuel <= 0 ? 0 : fuel + currentFuel(fuel));
+}
 
 const totalFuel = array => {
   return sum(map(currentFuel, array));
