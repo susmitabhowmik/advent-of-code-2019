@@ -5,10 +5,9 @@ const findFuel = num => {
   return Math.floor(num / 3) - 2;
 };
 
-const currentFuel = (currentMass) => {
-  const fuel = findFuel(currentMass);
-  return (fuel <= 0 ? 0 : fuel + currentFuel(fuel));
-}
+const currentFuel = (currentMass) =>
+  findFuel(currentMass) <= 0 ? 0 : findFuel(currentMass) + currentFuel(findFuel(currentMass))
+
 
 const totalFuel = array => {
   return sum(map(currentFuel, array));
@@ -16,4 +15,4 @@ const totalFuel = array => {
 
 console.log(totalFuel(massArray));
 
-module.exports = totalFuel;
+module.exports = { totalFuel, currentFuel, findFuel }
