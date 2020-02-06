@@ -16,4 +16,4 @@ const totalFuel = array => {
 
 console.log(totalFuel(massArray));
 
-module.exports = totalFuel;
+module.exports = { totalFuel, currentFuel, findFuel }
