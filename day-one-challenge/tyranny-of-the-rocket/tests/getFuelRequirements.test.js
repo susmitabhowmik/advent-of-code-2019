@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+const { expect, should } = require('chai');
 const { totalFuelForAllModulesOfMass, calculateFuel, fuelOfCurrentModuleOfMass } = require('../getFuelRequirements');
 
 describe('totalFuelForAllModulesOfMass', () => {
@@ -24,5 +24,9 @@ describe('calculateFuel', () => {
 describe('fuelOfCurrentModuleOfMass', () => {
   it('treats fuel as though it has mass and performs math on fuel until fuel is less than or equal to 0, then returns sum of all fuel required for mass module', () => {
     expect(fuelOfCurrentModuleOfMass(1969)).to.equal(966);
+  })
+
+  it('throws an error if mass entered is not a number', () => {
+    expect(() => fuelOfCurrentModuleOfMass('fourteen')).to.throw('mass entered is not a number!');
   })
 })
