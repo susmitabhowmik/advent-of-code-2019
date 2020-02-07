@@ -1,5 +1,5 @@
 const { expect, should } = require('chai');
-const { totalFuelForAllModulesOfMass, calculateFuel, fuelOfCurrentModuleOfMass } = require('../getFuelRequirements');
+const { totalFuelForAllModulesOfMass, calculateFuel, fuelOfCurrentModuleOfMass } = require('../day-one-challenge/tyranny-of-the-rocket/getFuelRequirements.js');
 
 describe('totalFuelForAllModulesOfMass', () => {
   it('outputs the correct amount of fuel when given a single input', () => {
