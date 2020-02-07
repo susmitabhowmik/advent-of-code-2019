@@ -12,7 +12,7 @@
     "mocha": "^7.0.1"
   },
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha ./tests/getFuelRequirements.test.js"
+    "test": "node ./node_modules/mocha/bin/mocha ./tests/*.test.js"
   },
   "repository": {
     "type": "git",
