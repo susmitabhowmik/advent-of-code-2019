@@ -5,15 +5,16 @@ const calculateFuel = mass => {
   return Math.floor(mass / 3) - 2;
 };
 
-const fuelOfCurrentModuleOfMass = (currentMass) => {
-  if (typeof (currentMass) !== 'number')
-    throw new TypeError("mass entered is not a number!");
-  return calculateFuel(currentMass) <= 0 ? 0 : calculateFuel(currentMass) + fuelOfCurrentModuleOfMass(calculateFuel(currentMass));
+const fuelOfCurrentModuleOfMass = (currentMass, runningTotalMass = 0) => {
+  if ((typeof (currentMass) !== 'number') || isNaN(currentMass))
+    throw new TypeError("mass entered is not a real number!");
+  const fuelMass = calculateFuel(currentMass);
+  return fuelMass <= 0 ? runningTotalMass : fuelOfCurrentModuleOfMass(fuelMass, runningTotalMass + fuelMass);
 }
 
-const totalFuelForAllModulesOfMass = array => {
-  return sum(map(fuelOfCurrentModuleOfMass, array));
-};
+const totalFuelForAllModulesOfMass = array =>
+  sum(map(fuelOfCurrentModuleOfMass, array));
+
 
 console.log(totalFuelForAllModulesOfMass(moduleMassArray));
 
