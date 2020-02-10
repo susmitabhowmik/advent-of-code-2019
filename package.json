@@ -12,7 +12,7 @@
     "mocha": "^7.0.1"
   },
   "scripts": {
-    "test": "mocha ./day-one-challenge/tyranny-of-the-rocket/tests/getFuelRequirements.test.js",
+    "test": "mocha ./tests/*.test.js",
     "main": "node ./index.js"
   },
   "repository": {
