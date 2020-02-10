@@ -26,7 +26,11 @@ describe('fuelOfCurrentModuleOfMass', () => {
     expect(fuelOfCurrentModuleOfMass(1969)).to.equal(966);
   })
 
-  it('throws an error if mass entered is not a real number', () => {
+  it('throws an error if mass entered is a string', () => {
     expect(() => fuelOfCurrentModuleOfMass('fourteen')).to.throw('mass entered is not a real number!');
+  })
+
+  it('throws an error if mass entered is NaN', () => {
+    expect(() => fuelOfCurrentModuleOfMass(parseInt('fourteen'))).to.throw('mass entered is not a real number!');
   })
 })
