@@ -1,5 +1,4 @@
 const { sum, map } = require('ramda');
-const moduleMassArray = require('./fuelData');
 
 const calculateFuel = mass => {
   return Math.floor(mass / 3) - 2;
@@ -14,8 +13,5 @@ const fuelOfCurrentModuleOfMass = (currentMass, runningTotalMass = 0) => {
 
 const totalFuelForAllModulesOfMass = array =>
   sum(map(fuelOfCurrentModuleOfMass, array));
-
-
-console.log(totalFuelForAllModulesOfMass(moduleMassArray));
 
 module.exports = { totalFuelForAllModulesOfMass, fuelOfCurrentModuleOfMass, calculateFuel }
