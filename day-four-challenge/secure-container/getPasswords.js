@@ -1,20 +1,12 @@
-const { map, sort } = require('ramda');
+const { map, sort, not, uniq, equals } = require('ramda');
 
 const diff = (a, b) => { return a - b };
 
-const sortedArray = array => {
-  return sort(diff, array).toString() === array.toString() ? true : false
-}
+const sortedArray = array => (
+  equals(sort(diff, array), array) ? true : false
+);
 
-
-const repeatingArray = (array) => {
-  for (let i = 0; i < array.length; i++) {
-    for (let j = i + 1; j < array.length; j++) {
-      if (array[i] === array[j]) return true;
-    }
-  }
-  return false;
-}
+const repeatingArray = (array) => (not(equals(uniq(array), array)))
 
 
 const checkDigits = (num) => {
