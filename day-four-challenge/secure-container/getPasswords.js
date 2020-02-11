@@ -1,15 +1,11 @@
-const { map} = require('ramda');
+const { map, sort } = require('ramda');
 
-//password is a six digit number
-//two adjacent digits are the same
-//going from left to right, the digits never decreases, only increase or stay the same
+const diff = (a, b) => { return a - b };
 
 const sortedArray = array => {
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] > array[i + 1]) return false;
-  }
-  return true;
+  return sort(diff, array).toString() === array.toString() ? true : false
 }
+
 
 const repeatingArray = (array) => {
   for (let i = 0; i < array.length; i++) {
@@ -22,18 +18,10 @@ const repeatingArray = (array) => {
 
 
 const checkDigits = (num) => {
-  const stringNum = num.toString();
-  let numStringArray = stringNum.split("");
-  let numArray = map(parseInt, numStringArray);
+  const numStringArray = num.toString().split('');
+  const numArray = map(parseInt, numStringArray);
 
-  if (numArray.length === 6) {
-    if (sortedArray(numArray) === true) {
-      if (repeatingArray(numArray) === true) {
-        return true;
-      }
-    }
-  }
-  return false;
+  return numArray.length === 6 && sortedArray(numArray) && repeatingArray(numArray) ? true : false
 }
 
 const findPasswords = (min, max) => {

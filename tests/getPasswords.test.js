@@ -9,7 +9,7 @@ describe('findPasswords', () => {
 })
 
 describe('checkDigits', () => {
-  it('takes in a range of a number and checks to see if the number is greater than 6, has one repeating digit, and that the digits only increase or stay the same from left to right', () => {
+  it('takes in a number and checks to see if the number is greater than 6, has one repeating digit, and that the digits only increase or stay the same from left to right', () => {
     expect(checkDigits(123466)).to.equal(true);
   }
   )
