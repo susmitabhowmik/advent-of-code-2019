@@ -1,49 +1,36 @@
-const { map} = require('ramda');
+const { map, sort, not, uniq, equals, unfold, allPass, pipe } = require('ramda');
 
-//password is a six digit number
-//two adjacent digits are the same
-//going from left to right, the digits never decreases, only increase or stay the same
+const MIN = 359282;
+const MAX = 820401;
+const PASSWORD_MIN_LENGTH = 6;
 
-const sortedArray = array => {
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] > array[i + 1]) return false;
-  }
-  return true;
+const diff = (a, b) => { return a - b };
+
+const digitsIncreaseOrStayTheSameFromLeftToRight = array => (
+  equals(sort(diff, array), array)
+);
+
+const hasAtLeastTwoRepeatingDigits = (array) => (not(equals(uniq(array), array)));
+
+const isASixDigitNumber = (array) => array.length === PASSWORD_MIN_LENGTH;
+
+const testPassWordRequirements = (array) = allPass([isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits]);
+
+const createNumArray = (num) => {
+  const numStringArray = num.toString().split('');
+  return map(parseInt, numStringArray);
 }
 
-const repeatingArray = (array) => {
-  for (let i = 0; i < array.length; i++) {
-    for (let j = i + 1; j < array.length; j++) {
-      if (array[i] === array[j]) return true;
-    }
-  }
-  return false;
+const meetsPasswordRequirements = (num) => {
+  return pipe(createNumArray, testPassWordRequirements)(num);
 }
 
-
-const checkDigits = (num) => {
-  const stringNum = num.toString();
-  let numStringArray = stringNum.split("");
-  let numArray = map(parseInt, numStringArray);
-
-  if (numArray.length === 6) {
-    if (sortedArray(numArray) === true) {
-      if (repeatingArray(numArray) === true) {
-        return true;
-      }
-    }
-  }
-  return false;
+function findPasswords(num = MIN, max = MAX) {
+  const f = num => num > max ? false : [num, num + 1];
+  const array = unfold(f, num);
+  return array.filter(num => meetsPasswordRequirements(num)).length;
 }
 
-const findPasswords = (min, max) => {
-  let counter = 0;
-  for (let i = min; i <= max; i++) {
-    if (checkDigits(i) === true) {
-      counter++;
-    }
-  }
-  return counter;
-}
+console.log(findPasswords(359282, 820401));
 
-module.exports = { findPasswords, checkDigits, repeatingArray, sortedArray }
+module.exports = { findPasswords, meetsPasswordRequirements, isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits };
