@@ -1,4 +1,4 @@
-const { map } = require('ramda');
+const { map, pipe, cond } = require('ramda');
 
 //password is a six digit number
 //two adjacent digits are the same
@@ -42,12 +42,11 @@ const findPasswords = (min, max) => {
   let counter = 0;
   for (let i = min; i <= max; i++) {
     if (checkDigits(i) === true) {
-      console.log(i);
       counter++;
     }
   }
   return counter;
 }
 
-console.log(findPasswords(MIN, MAX));
-module.exports = { findPasswords }
+console.log(repeatingArray([1, 2, 6, 7, 8, 9]));
+module.exports = { findPasswords, checkDigits, repeatingArray, sortedArray }
