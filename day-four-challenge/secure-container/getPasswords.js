@@ -1,4 +1,4 @@
-const { map, sort, not, uniq, equals, unfold } = require('ramda');
+const { map, sort, not, uniq, equals, unfold, allPass, pipe } = require('ramda');
 
 const MIN = 359282;
 const MAX = 820401;
@@ -10,24 +10,27 @@ const digitsIncreaseOrStayTheSameFromLeftToRight = array => (
   equals(sort(diff, array), array)
 );
 
-const hasAtLeastTwoRepeatingDigits = (array) => (not(equals(uniq(array), array)))
+const hasAtLeastTwoRepeatingDigits = (array) => (not(equals(uniq(array), array)));
 
 const isASixDigitNumber = (array) => array.length === PASSWORD_MIN_LENGTH;
 
-const meetsPasswordRequirements = (num) => {
-  const numStringArray = num.toString().split('');
-  const numArray = map(parseInt, numStringArray);
+const testPassWordRequirements = (array) = allPass([isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits]);
 
-  return isASixDigitNumber(numArray) && digitsIncreaseOrStayTheSameFromLeftToRight(numArray) && hasAtLeastTwoRepeatingDigits(numArray)
+const createNumArray = (num) => {
+  const numStringArray = num.toString().split('');
+  return map(parseInt, numStringArray);
+}
+
+const meetsPasswordRequirements = (num) => {
+  return pipe(createNumArray, testPassWordRequirements)(num);
 }
 
 function findPasswords(num = MIN, max = MAX) {
   const f = num => num > max ? false : [num, num + 1];
   const array = unfold(f, num);
-  //console.log(array);
   return array.filter(num => meetsPasswordRequirements(num)).length;
 }
 
 console.log(findPasswords(359282, 820401));
 
-module.exports = { findPasswords, meetsPasswordRequirements, isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits }
+module.exports = { findPasswords, meetsPasswordRequirements, isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits };
