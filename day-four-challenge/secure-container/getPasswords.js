@@ -31,6 +31,4 @@ function findPasswords(num = MIN, max = MAX) {
   return array.filter(num => meetsPasswordRequirements(num)).length;
 }
 
-console.log(findPasswords(359282, 820401));
-
 module.exports = { findPasswords, meetsPasswordRequirements, isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits };
