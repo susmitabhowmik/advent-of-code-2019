@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { findPasswords, meetsPasswordRequirements, isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits } = require('../day-four-challenge/secure-container/getPasswords')
+const { findPasswords, meetsPasswordRequirements, isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, removeDigitsWhichRepeatMoreThanTwice } = require('../day-four-challenge/secure-container/getPasswords')
 
 describe('findPasswords', () => {
   it('returns the number of possible passwords which can be created within a range', () => {
@@ -21,7 +21,7 @@ describe('isASixDigitNumber', () => {
 
 describe('meetsPasswordRequirements', () => {
   it('checks to see if a number is greater than 6, has one repeating digit, and that the digits only increase or stay the same from left to right', () => {
-    expect(meetsPasswordRequirements(123466)).to.equal(true);
+    expect(meetsPasswordRequirements(122466)).to.equal(true);
   }
   )
 
@@ -60,5 +60,11 @@ describe('sortedArray', () => {
 
   it('returns false if an array is not sorted', () => {
     expect(digitsIncreaseOrStayTheSameFromLeftToRight([1, 2, 12, 6, 7, 8, 9])).to.equal(false);
+  })
+})
+
+describe('removeDigitsWhichRepeatMoreThanTwice', () => {
+  it('removes all elements in a sorted array which occur more than twice within the array', () => {
+    expect(removeDigitsWhichRepeatMoreThanTwice([1, 2, 3, 4, 4, 4]).toString()).to.equal('1,2,3')
   })
 })
