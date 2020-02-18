@@ -50,4 +50,6 @@ function findPasswords(num = MIN, max = MAX) {
   return array.filter(num => meetsPasswordRequirements(num)).length;
 }
 
-module.exports = { findPasswords, meetsPasswordRequirements, isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, areAllRepeatingDigitsExactlyTwoDigitsLong };
+module.exports = { digitsIncreaseOrStayTheSameFromLeftToRight,hasAtLeastTwoRepeatingDigits, isASixDigitNumber, areAllRepeatingDigitsExactlyTwoDigitsLong, createNumArray, meetsPasswordRequirements, findPasswords };
+
+

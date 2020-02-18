@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { findPasswords, meetsPasswordRequirements, isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, areAllRepeatingDigitsExactlyTwoDigitsLong } = require('../day-four-challenge/secure-container/getPasswords')
+const { digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, isASixDigitNumber, areAllRepeatingDigitsExactlyTwoDigitsLong, meetsPasswordRequirements, findPasswords } = require('../day-four-challenge/secure-container/getPasswords')
 
 describe('findPasswords', () => {
   it('returns the number of possible passwords which can be created within a range', () => {
@@ -37,6 +37,11 @@ describe('meetsPasswordRequirements', () => {
 
   it('returns false when a number has greater than 6 digits', () => {
     expect(meetsPasswordRequirements(1234667)).to.equal(false);
+  }
+  )
+
+  it('returns false when a number does not contain at least one set of repeating digits which repeat exactly twice', () => {
+    expect(meetsPasswordRequirements(4444666)).to.equal(false);
   }
   )
 })
