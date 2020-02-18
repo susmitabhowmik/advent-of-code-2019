@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { findPasswords, meetsPasswordRequirements, isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, removeDigitsWhichRepeatMoreThanTwice } = require('../day-four-challenge/secure-container/getPasswords')
+const { findPasswords, meetsPasswordRequirements, isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, areAllRepeatingDigitsExactlyTwoDigitsLong } = require('../day-four-challenge/secure-container/getPasswords')
 
 describe('findPasswords', () => {
   it('returns the number of possible passwords which can be created within a range', () => {
@@ -41,7 +41,7 @@ describe('meetsPasswordRequirements', () => {
   )
 })
 
-describe('hasAtLeastTwoRepeatingDigits', () => {
+describe('areAllRepeating', () => {
   it('returns true when given an array which has a repeating digit', () => {
     expect(hasAtLeastTwoRepeatingDigits([5, 5, 6, 3, 7, 8, 3])).to.equal(true);
   }
@@ -63,8 +63,12 @@ describe('sortedArray', () => {
   })
 })
 
-describe('removeDigitsWhichRepeatMoreThanTwice', () => {
-  it('removes all elements in a sorted array which occur more than twice within the array', () => {
-    expect(removeDigitsWhichRepeatMoreThanTwice([1, 2, 3, 4, 4, 4])).to.equal(false)
+describe('areAllRepeatingDigitsExactlyTwoDigitsLong', () => {
+  it('returns true if all repeating digits are exactly two digits long', () => {
+    expect(areAllRepeatingDigitsExactlyTwoDigitsLong([1, 2, 3, 4, 4, 8])).to.equal(true)
+  })
+
+  it('returns false if no repeating digits are exactly two digits long', () => {
+    expect(areAllRepeatingDigitsExactlyTwoDigitsLong([1, 2, 3, 4, 4, 4])).to.equal(false)
   })
 })
