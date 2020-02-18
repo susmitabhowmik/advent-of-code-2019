@@ -4,7 +4,7 @@ const { findPasswords, meetsPasswordRequirements, isASixDigitNumber, digitsIncre
 describe('findPasswords', () => {
   it('returns the number of possible passwords which can be created within a range', () => {
     const value = findPasswords(187324, 200000);
-    expect(value).to.equal(6);
+    expect(value).to.equal(2);
   }
   );
 })
@@ -65,6 +65,6 @@ describe('sortedArray', () => {
 
 describe('removeDigitsWhichRepeatMoreThanTwice', () => {
   it('removes all elements in a sorted array which occur more than twice within the array', () => {
-    expect(removeDigitsWhichRepeatMoreThanTwice([1, 2, 3, 4, 4, 4]).toString()).to.equal('1,2,3')
+    expect(removeDigitsWhichRepeatMoreThanTwice([1, 2, 3, 4, 4, 4])).to.equal(false)
   })
 })

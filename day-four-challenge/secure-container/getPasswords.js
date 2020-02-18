@@ -1,4 +1,4 @@
-const { map, sort, not, uniq, equals, unfold, allPass, pipe } = require('ramda');
+const { map, sort, not, uniq, equals, unfold, allPass, pipe, join } = require('ramda');
 
 const MIN = 359282;
 const MAX = 820401;
@@ -15,18 +15,16 @@ const hasAtLeastTwoRepeatingDigits = (array) => (not(equals(uniq(array), array))
 const isASixDigitNumber = (array) => array.length === PASSWORD_MIN_LENGTH;
 
 const removeDigitsWhichRepeatMoreThanTwice = (array) => {
-  let num;
-  let newArray = array;
-  for (let i = 0; i < newArray.length; i++) {
-    if (newArray[i] === newArray[i + 1] && newArray[i] === newArray[i + 2]) num = newArray[i];
-    while (newArray[i] === num) {
-      newArray = newArray.slice(0, i).concat(newArray.slice(i + 1))
-    }
+  let newNumAsString = join('', array);
+  for (let i = 0; i < newNumAsString.length; i++) {
+    const regex = new RegExp(`${newNumAsString[i]}{3,}`);
+    newNumAsString = newNumAsString.replace(regex, '')
   }
-  return newArray;
+  let newNum = map(parseInt, newNumAsString);
+  return hasAtLeastTwoRepeatingDigits(newNum);
 }
 
-const testPassWordRequirements = (array) = allPass([isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits]);
+const testPassWordRequirements = (array) = allPass([isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, removeDigitsWhichRepeatMoreThanTwice]);
 
 const createNumArray = (num) => {
   const numStringArray = num.toString().split('');
@@ -42,6 +40,7 @@ const meetsPasswordRequirements = (num) => {
 function findPasswords(num = MIN, max = MAX) {
   const f = num => num > max ? false : [num, num + 1];
   const array = unfold(f, num);
+  console.log(array.filter(num => meetsPasswordRequirements(num)));
   return array.filter(num => meetsPasswordRequirements(num)).length;
 }
 
