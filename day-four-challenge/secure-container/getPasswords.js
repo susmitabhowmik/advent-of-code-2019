@@ -18,11 +18,16 @@ const hasAtLeastTwoRepeatingDigits = (array) => (not(equals(uniq(array), array))
 //returns true or false based on if an array has a length of 6 
 const isASixDigitNumber = (array) => array.length === PASSWORD_LENGTH;
 
+const arrayToString = (array) => join('', array);
+
+const removeDigitsRepeatingMoreThanTwice = (string) => {
+  const regex = new RegExp('0{3,}|1{3,}|2{3,}|3{3,}|4{3,}|5{3,}|6{3,}|7{3,}|8{3,}|9{3,}', 'g');
+  return replace(regex, '', string)
+}
+
 //determines if all repeating digits are exactly two digits long
 const areAllRepeatingDigitsExactlyTwoDigitsLong = (array) => {
-  let newNumAsString = join('', array);
-  const regex = new RegExp('0{3,}|1{3,}|2{3,}|3{3,}|4{3,}|5{3,}|6{3,}|7{3,}|8{3,}|9{3,}', 'g');
-  newNumAsString = replace(regex, '', newNumAsString)
+  const newNumAsString = removeDigitsRepeatingMoreThanTwice(arrayToString(array))
   const newNum = map(parseInt, newNumAsString);
   return hasAtLeastTwoRepeatingDigits(newNum);
 }
