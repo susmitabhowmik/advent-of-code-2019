@@ -1,4 +1,4 @@
-const { map, sort, not, uniq, equals, unfold, allPass, pipe, join } = require('ramda');
+const { map, sort, not, uniq, equals, unfold, allPass, pipe, join, replace } = require('ramda');
 
 const MIN = 359282;
 const MAX = 820401;
@@ -19,13 +19,12 @@ const hasAtLeastTwoRepeatingDigits = (array) => (not(equals(uniq(array), array))
 const isASixDigitNumber = (array) => array.length === PASSWORD_LENGTH;
 
 //determines if all repeating digits are exactly two digits long
+
 const areAllRepeatingDigitsExactlyTwoDigitsLong = (array) => {
   let newNumAsString = join('', array);
-  for (let i = 0; i < newNumAsString.length; i++) {
-    const regex = new RegExp(`${newNumAsString[i]}{3,}`);
-    newNumAsString = newNumAsString.replace(regex, '')
-  }
-  let newNum = map(parseInt, newNumAsString);
+  const regex = new RegExp('0{3,}|1{3,}|2{3,}|3{3,}|4{3,}|5{3,}|6{3,}|7{3,}|8{3,}|9{3,}', 'g');
+  newNumAsString = replace(regex, '', newNumAsString)
+  const newNum = map(parseInt, newNumAsString);
   return hasAtLeastTwoRepeatingDigits(newNum);
 }
 
@@ -50,6 +49,6 @@ function findPasswords(num = MIN, max = MAX) {
   return array.filter(num => meetsPasswordRequirements(num)).length;
 }
 
-module.exports = { digitsIncreaseOrStayTheSameFromLeftToRight,hasAtLeastTwoRepeatingDigits, isASixDigitNumber, areAllRepeatingDigitsExactlyTwoDigitsLong, createNumArray, meetsPasswordRequirements, findPasswords };
+module.exports = { digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, isASixDigitNumber, areAllRepeatingDigitsExactlyTwoDigitsLong, createNumArray, meetsPasswordRequirements, findPasswords };
 
 
