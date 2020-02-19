@@ -1,4 +1,4 @@
-const { map, sort, not, uniq, equals, unfold, allPass, pipe, join, replace } = require('ramda');
+const { map, sort, not, uniq, equals, allPass, pipe, join, replace, range } = require('ramda');
 
 const MIN = 359282;
 const MAX = 820401;
@@ -84,9 +84,8 @@ const meetsPasswordRequirements = (num) => {
  * @param {Number} max 
  * @returns {Boolean}
  */
-function findPasswords(num = MIN, max = MAX) {
-  const f = num => num > max ? false : [num, num + 1];
-  const array = unfold(f, num);
+function findPasswords(min = MIN, max = MAX) {
+  const array = range(min, max);
   return array.filter(num => meetsPasswordRequirements(num)).length;
 }
 
