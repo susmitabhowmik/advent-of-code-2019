@@ -1,4 +1,4 @@
-const { expect, should } = require('chai');
+const { expect } = require('chai');
 const { totalFuelForAllModulesOfMass, calculateFuel, fuelOfCurrentModuleOfMass } = require('../day-one-challenge/tyranny-of-the-rocket/getFuelRequirements');
 
 describe('totalFuelForAllModulesOfMass', () => {
