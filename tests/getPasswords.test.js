@@ -3,18 +3,18 @@ const { digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits
 
 describe('findPasswords', () => {
   it('returns the number of possible passwords which can be created within a range', () => {
-    const value = findPasswords(187324, 200000);
-    expect(value).to.equal(2);
+    const value = findPasswords();
+    expect(value).to.equal(316);
   }
-  );
+  ).timeout(10000);
 })
 
 describe('isASixDigitNumber', () => {
-  it('checks to see if a number has 6 digits', () => {
+  it('returns true if an array of numbers has 6 digits', () => {
     expect(isASixDigitNumber([2, 3, 4, 5, 7, 8])).to.be.true;
   })
 
-  it('checks to see if a number has 6 digits', () => {
+  it('returns false if an array of numbers does not have six digits', () => {
     expect(isASixDigitNumber([2, 3, 4, 7, 8])).to.be.false;
   })
 })
