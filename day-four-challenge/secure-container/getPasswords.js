@@ -1,4 +1,4 @@
-const { map, sort, not, uniq, equals, allPass, pipe, join, replace, range } = require('ramda');
+const { map, sort, not, uniq, unfold, allPass, pipe, join, replace } = require('ramda');
 
 const MIN = 359282;
 const MAX = 820401;
@@ -16,14 +16,14 @@ const diff = (a, b) => { return a - b };
  * @returns {Boolean}
  */
 const digitsIncreaseOrStayTheSameFromLeftToRight = array => (
-  equals(sort(diff, array), array)
-);
+  sort(diff, array).toString() === array.toString())
+  ;
 
 /** 
  * @param {Array.Number} array 
  * @returns {Boolean}
  */
-const hasAtLeastTwoRepeatingDigits = (array) => (not(equals(uniq(array), array)));
+const hasAtLeastTwoRepeatingDigits = (array) => (not(uniq(array).toString() === array.toString()));
 
 /**
  * @param {Array.Number} array
@@ -84,8 +84,9 @@ const meetsPasswordRequirements = (num) => {
  * @param {Number} max 
  * @returns {Boolean}
  */
-function findPasswords(min = MIN, max = MAX) {
-  const array = range(min, max);
+function findPasswords(num = MIN, max = MAX) {
+  const f = num => num > max ? false : [num, num + 1];
+  const array = unfold(f, num);
   return array.filter(num => meetsPasswordRequirements(num)).length;
 }
 
