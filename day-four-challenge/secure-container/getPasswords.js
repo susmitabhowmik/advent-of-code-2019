@@ -1,35 +1,27 @@
-const { map, sort, not, uniq, equals, unfold, allPass, pipe, join, replace } = require('ramda');
+const { map, sort, not, uniq, allPass, pipe, join, replace, range, subtract } = require('ramda');
 
 const MIN = 359282;
 const MAX = 820401;
 const PASSWORD_LENGTH = 6;
-
-/**
- * @param {Number} a 
- * @param {Number} b 
- * @returns {Number} 
- */
-const diff = (a, b) => { return a - b };
 
 /** 
  * @param {Array.Number} array 
  * @returns {Boolean}
  */
 const digitsIncreaseOrStayTheSameFromLeftToRight = array => (
-  equals(sort(diff, array), array)
-);
+  sort((a, b) => subtract(a, b), array).toString() === array.toString());
 
 /** 
  * @param {Array.Number} array 
  * @returns {Boolean}
  */
-const hasAtLeastTwoRepeatingDigits = (array) => (not(equals(uniq(array), array)));
+const hasAtLeastTwoRepeatingDigits = (array) => (not(uniq(array).toString() === array.toString()));
 
 /**
  * @param {Array.Number} array
  * @returns {Number} 
  */
-const isASixDigitNumber = (array) => array.length === PASSWORD_LENGTH;
+const meetsPasswordLengthRequirement = (array) => array.length === PASSWORD_LENGTH;
 
 /**
  * @param {Array.Number} array 
@@ -41,55 +33,37 @@ const arrayToString = (array) => join('', array);
  * @param {String} string 
  * @returns {String}
  */
-const removeDigitsRepeatingMoreThanTwice = (string) => {
-  const regex = new RegExp('0{3,}|1{3,}|2{3,}|3{3,}|4{3,}|5{3,}|6{3,}|7{3,}|8{3,}|9{3,}', 'g');
-  return replace(regex, '', string) //'7777884 => '884'
-}
+const removeDigitsRepeatingMoreThanTwice = (string) => (replace(new RegExp('0{3,}|1{3,}|2{3,}|3{3,}|4{3,}|5{3,}|6{3,}|7{3,}|8{3,}|9{3,}', 'g'), '', string)) //'7777884' => '884'
 
 /**
  * @param {Array.Number} array 
  * @returns {Boolean}
  */
-const areAllRepeatingDigitsExactlyTwoDigitsLong = (array) => {
-  const newNumAsString = removeDigitsRepeatingMoreThanTwice(arrayToString(array))
-  const newNum = map(parseInt, newNumAsString);
-  return hasAtLeastTwoRepeatingDigits(newNum);
-}
+const areAllRepeatingDigitsExactlyTwoDigitsLong = (array) => (hasAtLeastTwoRepeatingDigits(map(parseInt, removeDigitsRepeatingMoreThanTwice(arrayToString(array)))));
 
 /**
  * @param {Array.Number} array
  * @returns {Boolean}
  */
-const testPassWordRequirements = (array) = allPass([isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, areAllRepeatingDigitsExactlyTwoDigitsLong]);
+const testPassWordRequirements = (array) = allPass([meetsPasswordLengthRequirement, digitsIncreaseOrStayTheSameFromLeftToRight, areAllRepeatingDigitsExactlyTwoDigitsLong]);
 
 /**
  * @param {Number} num 
  * @returns {Array.Number}
  */
-const createNumArray = (num) => {
-  const numStringArray = num.toString().split('');
-  return map(parseInt, numStringArray);
-}
+const createNumArray = (num) => (num.toString().split('').map(Number)); //124 => [1,2,4]
 
 /**
  * @param {Number} num 
  * @returns {Boolean}
  */
-const meetsPasswordRequirements = (num) => {
-  return pipe(createNumArray, testPassWordRequirements)(num);
-}
+const meetsPasswordRequirements = (num) => pipe(createNumArray, testPassWordRequirements)(num);
 
 /**
  * @param {Number} num 
  * @param {Number} max 
- * @returns {Boolean}
+ * @returns {Number}
  */
-function findPasswords(num = MIN, max = MAX) {
-  const f = num => num > max ? false : [num, num + 1];
-  const array = unfold(f, num);
-  return array.filter(num => meetsPasswordRequirements(num)).length;
-}
+const findPasswords = (min = MIN, max = MAX) => (range(min, max).filter(num => meetsPasswordRequirements(num)).length);
 
-module.exports = { digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, isASixDigitNumber, areAllRepeatingDigitsExactlyTwoDigitsLong, createNumArray, meetsPasswordRequirements, findPasswords };
-
-
+module.exports = { digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, meetsPasswordLengthRequirement, areAllRepeatingDigitsExactlyTwoDigitsLong, createNumArray, meetsPasswordRequirements, findPasswords };
