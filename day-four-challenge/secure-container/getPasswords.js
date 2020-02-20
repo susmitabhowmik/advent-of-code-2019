@@ -16,8 +16,7 @@ const diff = (a, b) => { return a - b };
  * @returns {Boolean}
  */
 const digitsIncreaseOrStayTheSameFromLeftToRight = array => (
-  sort(diff, array).toString() === array.toString())
-  ;
+  sort(diff, array).toString() === array.toString());
 
 /** 
  * @param {Array.Number} array 
@@ -29,7 +28,7 @@ const hasAtLeastTwoRepeatingDigits = (array) => (not(uniq(array).toString() === 
  * @param {Array.Number} array
  * @returns {Number} 
  */
-const isASixDigitNumber = (array) => array.length === PASSWORD_LENGTH;
+const meetsPasswordLengthRequirement = (array) => array.length === PASSWORD_LENGTH;
 
 /**
  * @param {Array.Number} array 
@@ -43,7 +42,7 @@ const arrayToString = (array) => join('', array);
  */
 const removeDigitsRepeatingMoreThanTwice = (string) => {
   const regex = new RegExp('0{3,}|1{3,}|2{3,}|3{3,}|4{3,}|5{3,}|6{3,}|7{3,}|8{3,}|9{3,}', 'g');
-  return replace(regex, '', string) //'7777884 => '884'
+  return replace(regex, '', string) //'7777884' => '884'
 }
 
 /**
@@ -60,7 +59,7 @@ const areAllRepeatingDigitsExactlyTwoDigitsLong = (array) => {
  * @param {Array.Number} array
  * @returns {Boolean}
  */
-const testPassWordRequirements = (array) = allPass([isASixDigitNumber, digitsIncreaseOrStayTheSameFromLeftToRight, areAllRepeatingDigitsExactlyTwoDigitsLong]);
+const testPassWordRequirements = (array) = allPass([meetsPasswordLengthRequirement, digitsIncreaseOrStayTheSameFromLeftToRight, areAllRepeatingDigitsExactlyTwoDigitsLong]);
 
 /**
  * @param {Number} num 
@@ -68,7 +67,7 @@ const testPassWordRequirements = (array) = allPass([isASixDigitNumber, digitsInc
  */
 const createNumArray = (num) => {
   const numStringArray = num.toString().split('');
-  return map(parseInt, numStringArray);
+  return map(parseInt, numStringArray); //124 => [1,2,4]
 }
 
 /**
@@ -84,12 +83,14 @@ const meetsPasswordRequirements = (num) => {
  * @param {Number} max 
  * @returns {Boolean}
  */
+
+
 function findPasswords(num = MIN, max = MAX) {
   const f = num => num > max ? false : [num, num + 1];
   const array = unfold(f, num);
   return array.filter(num => meetsPasswordRequirements(num)).length;
 }
 
-module.exports = { digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, isASixDigitNumber, areAllRepeatingDigitsExactlyTwoDigitsLong, createNumArray, meetsPasswordRequirements, findPasswords };
+module.exports = { digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, meetsPasswordLengthRequirement, areAllRepeatingDigitsExactlyTwoDigitsLong, createNumArray, meetsPasswordRequirements, findPasswords };
 
 
