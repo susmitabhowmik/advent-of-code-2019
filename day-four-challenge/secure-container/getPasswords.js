@@ -1,4 +1,4 @@
-const { map, sort, not, uniq, allPass, pipe, join, replace, range, subtract } = require('ramda');
+const { map, sort, not, uniq, allPass, join, replace, range, subtract } = require('ramda');
 
 const MIN = 359282;
 const MAX = 820401;
@@ -57,7 +57,7 @@ const createNumArray = (num) => (num.toString().split('').map(Number)); //124 =>
  * @param {Number} num 
  * @returns {Boolean}
  */
-const meetsPasswordRequirements = (num) => pipe(createNumArray, testPassWordRequirements)(num);
+const meetsPasswordRequirements = (num) => testPassWordRequirements(createNumArray(num));
 
 /** Takes in a range and returns how many passwords are we are able to create within that range
  * @param {Number} min 
