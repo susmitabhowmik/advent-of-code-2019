@@ -47,6 +47,6 @@ const meetsPasswordRequirements = (num) => testPassWordRequirements(createNumArr
  * @param {Number} max 
  * @returns {Number} - the number of possible passwords
  */
-const findPasswords = (min = MIN, max = MAX) => (range(min, max).filter(num => meetsPasswordRequirements(num)).length);
+const findPasswords = (min = MIN, max = MAX) => (range(min, max).filter(meetsPasswordRequirements).length);
 
 module.exports = { digitsIncreaseOrStayTheSameFromLeftToRight, hasAtLeastTwoRepeatingDigits, meetsPasswordLengthRequirement, areAllRepeatingDigitsExactlyTwoDigitsLong, createNumArray, meetsPasswordRequirements, findPasswords };
